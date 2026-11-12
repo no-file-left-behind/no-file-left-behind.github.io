@@ -12,3 +12,4 @@ jobs:
         with:
           node-version: 22
       - run: node scenarios/reference/run.mjs
+      - run: node implementations/web/test/scenarios.mjs

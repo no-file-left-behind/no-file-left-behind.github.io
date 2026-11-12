@@ -27,6 +27,9 @@
   .embedded .topbar, .embedded main > h1, .embedded main > p.lead { display: none; }
   .embedded main { padding-top: 16px; padding-bottom: 16px; }
   a { color: var(--accent); }
+  /* The list itself is the <unsaved-list> element; it takes this page's colours. */
+  unsaved-list { --nflb-panel: var(--panel); --nflb-text: var(--text); --nflb-muted: var(--muted); --nflb-line: var(--line); --nflb-hover: var(--bg);
+    --nflb-accent: var(--accent); --nflb-danger: var(--danger); --nflb-ok: var(--ok); --nflb-backdrop: var(--shade); }
   body { margin: 0; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--text); }
   main { max-width: 900px; margin: 0 auto; padding: 24px 16px 48px; }
   h1 { font-size: 22px; margin: 0 0 4px; }
@@ -55,24 +58,13 @@
   button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .log { margin-top: 16px; font-size: 13px; color: var(--muted); }
   .log li.bad { color: var(--danger); } .log li.good { color: var(--ok); }
-  .shade { position: fixed; inset: 0; z-index: 20; background: var(--shade); display: none; align-items: center; justify-content: center; padding: 16px; }
-  .shade.open { display: flex; }
-  .dialog { background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 12px; width: min(560px, 100%);
-    max-height: calc(100vh - 32px); display: flex; flex-direction: column; box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  dialog.dialog { padding: 0; margin: auto; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 12px;
+    width: min(460px, calc(100vw - 32px)); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  dialog.dialog::backdrop { background: var(--shade); }
   .dialog h2 { font-size: 17px; margin: 0; padding: 16px 18px 8px; }
-  .rows { overflow-y: auto; padding: 0 10px; }
-  .row { display: grid; grid-template-columns: auto 1fr auto; gap: 2px 10px; align-items: start; padding: 8px; border-radius: 8px; }
-  .row:hover { background: var(--bg); }
-  .row .name { background: none; border: none; padding: 0; font-weight: 600; text-align: left; cursor: pointer; }
-  .row .where, .row .note { grid-column: 2; font-size: 13px; color: var(--muted); }
-  .row .note.bad { color: var(--danger); } .row .note.good { color: var(--ok); }
-  .row .acts { grid-row: 1; grid-column: 3; display: flex; gap: 6px; }
   .foot { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--line); }
   .foot .spacer { flex: 1; }
   .dialog p { margin: 0; padding: 4px 18px 8px; }
-  .dialog p.hint { color: var(--muted); font-size: 13px; }
-  .dialog p.why { color: var(--danger); font-size: 13px; }
-  .dialog p.why:empty { display: none; }
   .docs .empty { margin: 0; padding: 18px 6px; color: var(--muted); }
   .dialog label.field { display: block; padding: 4px 18px 8px; }
   .dialog input[type=text] { width: 100%; font: inherit; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); }
@@ -100,7 +92,7 @@
 <main>
   <h1>Try it</h1>
   <p class="lead">A pretend app with four documents. Change them, set the switches, then quit. Try making one fail or
-    cancelling a "Save as": nothing closes. <a href="../SPEC.html">Specification</a></p>
+    cancelling a "Save as": nothing closes. The list is the <a href="https://github.com/raykholo/no-file-left-behind/tree/main/implementations/web">web component</a> from this project. <a href="../SPEC.html">Specification</a></p>
 
   <div class="app">
     <div class="tabs" id="tabs"></div>
@@ -115,52 +107,25 @@
   <ol class="log" id="log" aria-live="polite"></ol>
 </main>
 
-<!-- The list of unsaved work -->
-<div class="shade" id="list-shade">
-  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="list-title" aria-describedby="list-help">
-    <h2 id="list-title"></h2>
-    <p id="list-help" class="hint">Ticked designs are saved; the rest close without saving.</p>
-    <div class="rows" id="rows"></div>
-    <div class="foot">
-      <button id="dont-save">Don't Save</button>
-      <span class="spacer"></span>
-      <button id="cancel">Cancel</button>
-      <button class="primary" id="save-selected">Save Selected</button>
-    </div>
-  </div>
-</div>
-
-<!-- The familiar single prompt (one unsaved document) -->
-<div class="shade" id="one-shade">
-  <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="one-title" aria-describedby="one-note">
-    <h2 id="one-title"></h2>
-    <p id="one-note" class="hint"></p>
-    <p id="one-why" class="why" role="alert"></p>
-    <div class="foot">
-      <button id="one-dont">Don't Save</button>
-      <span class="spacer"></span>
-      <button id="one-cancel">Cancel</button>
-      <button class="primary" id="one-save">Save</button>
-    </div>
-  </div>
-</div>
+<!-- The list of unsaved work, and the single prompt: the project's own web component -->
+<unsaved-list id="list"></unsaved-list>
 
 <!-- A pretend "Save as" picker -->
-<div class="shade" id="picker-shade">
-  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="picker-title">
-    <h2 id="picker-title"></h2>
-    <label class="field">File name <input type="text" id="picker-name"></label>
-    <div class="foot">
-      <span class="spacer"></span>
-      <button id="picker-cancel">Cancel</button>
-      <button class="primary" id="picker-save">Save</button>
-    </div>
+<dialog class="dialog" id="picker" aria-labelledby="picker-title">
+  <h2 id="picker-title"></h2>
+  <label class="field">File name <input type="text" id="picker-name"></label>
+  <div class="foot">
+    <span class="spacer"></span>
+    <button id="picker-cancel">Cancel</button>
+    <button class="primary" id="picker-save">Save</button>
   </div>
-</div>
+</dialog>
 
-<script>
-"use strict";
+<script type="module">
+import "../implementations/web/unsaved-list.js";
+
 const $ = (id) => document.getElementById(id);
+const list = $("list");
 // Embedded in the site's front page (?embed): no bar or heading of its own, and it tells the page
 // its height so the frame fits it.
 const embedded = new URLSearchParams(location.search).has("embed");
@@ -170,20 +135,28 @@ if (embedded) {
   new ResizeObserver(tell).observe(document.body);
   addEventListener("load", tell);
 }
+// On the front page the demo sits in a frame: tell the page where a prompt is, so it can bring it
+// into view, clear of its top bar.
+function tellPage(dialog) {
+  if (!embedded) return;
+  const r = dialog.getBoundingClientRect();
+  parent.postMessage({ nflbPrompt: { top: r.top, bottom: r.bottom } }, "*");
+}
 const START = [
   { name: "Bracket", path: "~/Designs/Bracket.sc", dirty: true },
   { name: "Lid", path: "~/Designs/Lid.sc", dirty: true },
   { name: "Untitled", path: null, dirty: true },
   { name: "Gearbox", path: "~/Designs/Gearbox.sc", dirty: false },
 ];
-let docs, front, action, closing, rowNote, nextId, closedGroups, hasQuit, opener;
+let docs, front, nextId, closedGroups, hasQuit;
+const byId = (id) => docs.find((d) => d.id === id);
 
 function reset() {
-  docs = START.map((d, i) => ({ ...d, id: i, readOnly: false, fails: false }));
+  docs = START.map((d, i) => ({ ...d, id: i, readOnly: false, fails: false, slow: false }));
   nextId = docs.length; closedGroups = [];
-  front = 0; action = null; rowNote = {}; hasQuit = false; opener = null;
+  front = 0; hasQuit = false;
   $("log").replaceChildren();
-  closeAll(); render();
+  render();
 }
 function log(text, kind) {
   const li = document.createElement("li");
@@ -228,6 +201,7 @@ function render() {
         <label><input type="checkbox" data-k="dirty"> Unsaved changes</label>
         <label><input type="checkbox" data-k="readOnly"> Read-only file</label>
         <label><input type="checkbox" data-k="fails"> Save will fail</label>
+        <label><input type="checkbox" data-k="slow"> Slow save</label>
       </div>`;
     row.querySelector("strong").textContent = d.name;
     row.querySelector(".where").textContent = d.path || "Not saved yet";
@@ -239,75 +213,85 @@ function render() {
     return row;
   }));
 }
-const SHADES = ["list-shade", "one-shade", "picker-shade"];
-// While a prompt is open, the page behind it can't be clicked or tabbed into (SPEC 5.2).
-function behind() {
-  const any = SHADES.some((id) => $(id).classList.contains("open"));
-  for (const el of document.querySelectorAll("header.topbar, main")) el.inert = any;
-}
-function hide(id) { $(id).classList.remove("open"); behind(); }
-function closeAll() { for (const id of SHADES) $(id).classList.remove("open"); behind(); }
-function open(id, focus) {
-  $(id).classList.add("open"); behind();
-  (focus || $(id).querySelector("button.primary")).focus();
-  // On the front page the demo sits in a frame: tell the page where the prompt is, so it can bring it
-  // into view, clear of its top bar.
-  if (embedded) { const r = $(id).querySelector(".dialog").getBoundingClientRect(); parent.postMessage({ nflbPrompt: { top: r.top, bottom: r.bottom } }, "*"); }
-}
-// When the prompts are gone, focus returns to the button that started the action, or the nearest thing left.
-function backToPage() {
-  const el = opener && opener.isConnected && !opener.disabled ? opener : $("quit").disabled ? $("reset") : $("quit");
-  opener = null; el.focus();
-}
 
-// Saving one document. Resolves "saved", "failed" or "cancelled" (its picker was cancelled).
-function save(d) {
+// The app's side of the bargain: it does the saving and the asking where. The list never touches a file.
+async function save(doc, path, signal) {
+  const d = byId(doc.id);
+  if (d.slow) { // SPEC 6.2: Cancel during a slow save abandons it, and the original file is left as it was
+    await new Promise((done, abandon) => {
+      const t = setTimeout(done, 2500);
+      signal.addEventListener("abort", () => { clearTimeout(t); abandon(new Error("abandoned")); });
+    });
+  }
+  if (d.fails) { log(`${d.name}: save failed (disk full)`, "bad"); throw new Error("The disk is full: free some space and try again."); }
+  d.path = path; d.readOnly = false; d.dirty = false;
+  log(`Saved ${d.name} to ${path}`, "good"); render();
+}
+// Asked only for a document with no file to write to (SPEC 3.1, 6.1), and it names the document.
+function pick(doc, why) {
+  const d = byId(doc.id), dialog = $("picker");
   return new Promise((done) => {
-    const write = () => {
-      if (d.fails) { rowNote[d.id] = ["bad", "The disk is full: free some space and try again."]; log(`${d.name}: save failed (disk full)`, "bad"); return done("failed"); }
-      d.dirty = false; rowNote[d.id] = ["good", "Saved"]; log(`Saved ${d.name} to ${d.path}`, "good"); done("saved");
-    };
-    if (d.path && !d.readOnly) return write();
-    // Never saved, or the file can't be written: ask where, for this document only (SPEC 3.1, 6.1).
-    $("picker-title").textContent = d.readOnly ? `${d.name} is read-only. Save a copy as…` : `Save “${d.name}” as…`;
+    $("picker-title").textContent = why === "read-only" ? `${d.name} is read-only. Save a copy as…` : `Save “${d.name}” as…`;
     $("picker-name").value = d.name + ".sc";
-    const finish = (ok) => {
-      hide("picker-shade");
-      $("picker-save").onclick = $("picker-cancel").onclick = null;
-      if (!ok) { rowNote[d.id] = ["bad", "Not saved: you cancelled choosing where."]; log(`${d.name}: “Save as” cancelled`, "bad"); return done("cancelled"); }
-      d.path = "~/Designs/" + ($("picker-name").value.trim() || d.name + ".sc"); d.readOnly = false; write();
-    };
-    $("picker-save").onclick = () => finish(true);
-    $("picker-cancel").onclick = () => finish(false);
-    open("picker-shade", $("picker-name"));
+    const finish = (path) => { dialog.close(); if (!path) log(`${d.name}: “Save as” cancelled`, "bad"); done(path); };
+    $("picker-save").onclick = () => finish("~/Designs/" + ($("picker-name").value.trim() || d.name + ".sc"));
+    $("picker-cancel").onclick = () => finish(null);
+    dialog.oncancel = (e) => { e.preventDefault(); finish(null); }; // Escape
+    $("picker-name").onkeydown = (e) => { if (e.key === "Enter") { e.preventDefault(); $("picker-save").click(); } };
+    dialog.showModal(); $("picker-name").focus(); tellPage(dialog);
   });
 }
 
-// Closing documents: the whole action (quit or close all) and the list of unsaved work.
-function start(kind, only) {
-  action = kind; rowNote = {}; opener = document.activeElement;
-  closing = only ? [only] : docs.slice(); // only the documents this action closes (SPEC 1.3)
-  const unsaved = closing.filter((d) => d.dirty);
-  if (unsaved.length === 0) return finishAction();
-  if (unsaved.length === 1) return askOne(unsaved[0]);
-  for (const d of docs) d.listed = closing.includes(d) && d.dirty;
-  for (const d of unsaved) d.ticked = true; // SPEC 2.4: every row starts ticked
-  showList();
-}
-function finishAction() {
-  closeAll();
+// Closing documents: quit, Close All Tabs, or one tab's ×. All three go through the same list.
+async function start(kind, only) {
+  if (list.open) return;
+  const opener = document.activeElement;
+  const closing = only ? [only] : docs.slice(); // only the documents this action closes (SPEC 1.3)
+  const gone = new Set();                        // answered on their own row, so already closed (SPEC 4.1, 4.2)
+  let wasBusy = false;
+  const asking = list.ask(closing.map((d) => ({ id: d.id, name: d.name, path: d.path, dirty: d.dirty, readOnly: d.readOnly })), {
+    save, pick,
+    noun: { one: "design", other: "designs" },
+    onShow: (doc) => { front = doc.id; render(); },
+    onChange: (s) => {
+      if (s.outcome) return;
+      for (const id of s.closed) {
+        if (gone.has(id)) continue;
+        gone.add(id);
+        const d = byId(id);
+        log(s.lost.includes(id) ? `Discarded ${d.name}` : `Closed ${d.name}`);
+        closeDoc(d);
+      }
+      if (wasBusy && !s.request && s.rows.some((r) => r.note)) log("Nothing closed: a save didn't happen. Fix it and try again.", "bad"); // SPEC 3.1.1
+      wasBusy = !!s.request;
+      if (!docs.some((d) => d.id === front) && docs.length) front = docs[0].id;
+      render();
+    },
+  });
+  if (list.open) tellPage(list.shadowRoot.querySelector("dialog"));
+  const result = await asking;
+
+  for (const id of result.abandoned) log(`${byId(id).name}: save abandoned. Its file is as it was.`, "bad");
+  if (result.outcome === "stopped") { // SPEC 3.3: nothing more closes; a row already answered stays answered
+    log(gone.size ? "Cancelled: nothing more closed. What you answered on its own row stays answered." : "Cancelled: everything is still open.");
+    render(); return backToPage(opener);
+  }
   const left = closing.filter((d) => docs.includes(d));
-  const n = left.length;
   const lost = left.filter((d) => d.dirty).map((d) => d.name);
-  const how = lost.length ? `not saved, as you chose: ${lost.join(", ")}.` : "nothing was lost.";
-  if (action === "quit") log(`Quit: ${n} document${n === 1 ? "" : "s"} closed; ${how}`, lost.length ? undefined : "good");
-  else if (action === "close") log(`Closed ${n} tab${n === 1 ? "" : "s"}; ${how}`, lost.length ? undefined : "good");
+  for (const name of lost) log(`Closed ${name} without saving`);
+  const n = left.length, how = lost.length ? `not saved, as you chose: ${lost.join(", ")}.` : "nothing was lost.";
+  if (kind === "quit") log(`Quit: ${n} document${n === 1 ? "" : "s"} closed; ${how}`, lost.length ? undefined : "good");
+  else if (kind === "close") log(`Closed ${n} tab${n === 1 ? "" : "s"}; ${how}`, lost.length ? undefined : "good");
   else if (left.length && !left[0].dirty) log(`Closed ${left[0].name}.`, "good");
   remember(left);
   docs = docs.filter((d) => !closing.includes(d));
-  if (action === "quit") hasQuit = true;
+  if (kind === "quit") hasQuit = true;
   if (!docs.some((d) => d.id === front) && docs.length) front = docs[0].id;
-  render(); backToPage();
+  render(); backToPage(opener);
+}
+// When the prompt is gone, focus returns to the button that started the action, or the nearest thing left.
+function backToPage(opener) {
+  (opener && opener.isConnected && !opener.disabled ? opener : $("quit").disabled ? $("reset") : $("quit")).focus();
 }
 function closeDoc(d) { remember([d]); docs = docs.filter((x) => x !== d); }
 
@@ -321,7 +305,7 @@ function reopen() {
   if (!group) return;
   for (const c of group) {
     if (!c.path) { log(`${c.name} was never saved, so there is no file to reopen. Its work is gone.`, "bad"); continue; }
-    const d = { name: c.name, path: c.path, dirty: false, readOnly: false, fails: false, id: nextId++ };
+    const d = { name: c.name, path: c.path, dirty: false, readOnly: false, fails: false, slow: false, id: nextId++ };
     docs.push(d); front = d.id; hasQuit = false;
     log(c.lost ? `Reopened ${c.name} from its file. The changes closed without saving are gone.` : `Reopened ${c.name}.`, c.lost ? "bad" : "good");
   }
@@ -331,86 +315,12 @@ function newDoc() {
   const taken = new Set(docs.map((d) => d.name));
   let n = 1, name = "Untitled";
   while (taken.has(name)) name = `Untitled ${++n}`; // SPEC 6.3: same-named documents told apart
-  const d = { name, path: null, dirty: false, readOnly: false, fails: false, id: nextId++ };
+  const d = { name, path: null, dirty: false, readOnly: false, fails: false, slow: false, id: nextId++ };
   docs.push(d); front = d.id; hasQuit = false;
   log(`New document ${name}. Tick "Unsaved changes" to pretend you worked on it.`);
   render();
 }
 
-const READ_ONLY = "The original file is read-only, so saving asks for a new place.";
-function showList() {
-  // Every document the list opened with keeps its row until it closes; one that saved shows it (SPEC 3.1.1).
-  const listed = docs.filter((d) => d.listed);
-  const left = listed.filter((d) => d.dirty).length;
-  if (left === 0) return finishAction(); // SPEC 4.3
-  $("list-title").textContent = `Save changes to ${left} design${left === 1 ? "" : "s"}?`;
-  $("rows").replaceChildren(...listed.map((d) => {
-    const row = document.createElement("div");
-    row.className = "row"; row.setAttribute("role", "group"); row.setAttribute("aria-label", d.name);
-    row.innerHTML = `<input type="checkbox"><button class="name"></button>
-      <span class="acts"><button class="small save">Save</button><button class="small discard">Discard</button></span>
-      <span class="where"></span>`;
-    const tick = row.querySelector("input");
-    tick.checked = d.ticked && d.dirty; tick.disabled = !d.dirty; tick.setAttribute("aria-label", "Save " + d.name);
-    tick.onchange = () => { d.ticked = tick.checked; };
-    const name = row.querySelector(".name");
-    name.textContent = d.name; name.title = "Show this document";
-    name.onclick = () => { front = d.id; render(); };
-    row.querySelector(".where").textContent = d.path || "Not saved yet";
-    const said = rowNote[d.id] || (d.readOnly && d.dirty ? ["", READ_ONLY] : null); // SPEC 6.1: it says why up front
-    if (said) {
-      const note = document.createElement("span");
-      note.className = "note " + said[0]; note.textContent = said[1];
-      row.append(note);
-    }
-    const saveBtn = row.querySelector(".save"), discardBtn = row.querySelector(".discard");
-    saveBtn.setAttribute("aria-label", "Save " + d.name); discardBtn.setAttribute("aria-label", "Discard " + d.name);
-    saveBtn.disabled = discardBtn.disabled = !d.dirty;
-    saveBtn.onclick = async () => { if ((await save(d)) === "saved") { closeDoc(d); log(`Closed ${d.name}`); } render(); showList(); }; // SPEC 4.1
-    discardBtn.onclick = () => { closeDoc(d); log(`Discarded ${d.name}`); render(); showList(); };      // SPEC 4.2
-    return row;
-  }));
-  open("list-shade");
-}
-$("save-selected").onclick = async () => {
-  const listed = docs.filter((d) => d.listed);
-  let allSaved = true;
-  for (const d of listed.filter((d) => d.ticked && d.dirty)) {
-    const result = await save(d);
-    if (result !== "saved") allSaved = false;
-    if (result === "cancelled") break; // SPEC 3.1.3: a failure doesn't stop the others; a cancelled picker does
-  }
-  if (!allSaved) { log("Nothing closed: a save didn't happen. Fix it and try again.", "bad"); render(); return showList(); } // SPEC 3.1.1
-  for (const d of listed.filter((d) => d.dirty)) log(`Closed ${d.name} without saving`);
-  finishAction();
-};
-$("dont-save").onclick = () => { for (const d of docs.filter((d) => d.listed && d.dirty)) log(`Closed ${d.name} without saving`); finishAction(); };
-$("cancel").onclick = () => { // SPEC 3.3: nothing more closes; a row already answered stays answered
-  const answered = closing.some((d) => !docs.includes(d));
-  closeAll(); log(answered ? "Cancelled: nothing more closed. What you answered on its own row stays answered." : "Cancelled: everything is still open."); render(); backToPage();
-};
-
-function askOne(d, why) { // SPEC 1.2: one unsaved document keeps the single prompt
-  $("one-title").textContent = `Save changes to “${d.name}”?`;
-  $("one-note").textContent = d.path || "Not saved yet";
-  $("one-why").textContent = why || (d.readOnly ? READ_ONLY : "");
-  $("one-save").onclick = async () => {
-    hide("one-shade");
-    if ((await save(d)) === "saved") return finishAction();
-    log("Nothing closed.", "bad"); render(); askOne(d, rowNote[d.id][1]); // it comes back and says why (SPEC 3.4)
-  };
-  $("one-dont").onclick = () => { log(`Closed ${d.name} without saving`); finishAction(); };
-  $("one-cancel").onclick = () => { closeAll(); log("Cancelled: everything is still open."); render(); backToPage(); };
-  open("one-shade");
-}
-
-// SPEC 5.1: Enter is the default button, Escape is Cancel, in every prompt.
-document.addEventListener("keydown", (e) => {
-  const top = ["picker-shade", "one-shade", "list-shade"].find((id) => $(id).classList.contains("open"));
-  if (!top) return;
-  if (e.key === "Escape") { e.preventDefault(); ({ "picker-shade": $("picker-cancel"), "one-shade": $("one-cancel"), "list-shade": $("cancel") })[top].click(); }
-  if (e.key === "Enter" && !(e.target instanceof HTMLButtonElement)) { e.preventDefault(); $(top).querySelector("button.primary").click(); }
-});
 $("quit").onclick = () => start("quit");
 $("close-all").onclick = () => start("close");
 $("reset").onclick = reset;

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>unsaved-list example</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; background: Canvas; color: CanvasText; }
+  main { max-width: 760px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  p.lead { margin: 0 0 16px; opacity: 0.75; }
+  .doc { display: flex; flex-wrap: wrap; gap: 4px 16px; align-items: baseline; padding: 10px; border: 1px solid #8884; border-radius: 8px; margin-bottom: 8px; }
+  .doc.front { outline: 2px solid #2f6fde; }
+  .doc strong { min-width: 7em; }
+  .doc .where { opacity: 0.7; font-size: 13px; flex: 1; }
+  .doc label { font-size: 13px; }
+  .bar { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  button { font: inherit; padding: 6px 14px; }
+  #log { font-size: 13px; opacity: 0.85; }
+  #picker { border-radius: 10px; border: 1px solid #8886; padding: 16px 18px; width: min(420px, calc(100vw - 32px)); }
+  #picker h2 { font-size: 16px; margin: 0 0 10px; }
+  #picker input { width: 100%; font: inherit; padding: 6px; margin: 4px 0 12px; box-sizing: border-box; }
+  #picker menu { display: flex; justify-content: flex-end; gap: 8px; margin: 0; padding: 0; }
+</style>
+</head>
+<body>
+<main>
+  <h1>A pretend app</h1>
+  <p class="lead">Set the switches, then Quit. Make a save fail or cancel a "Save as": nothing closes.</p>
+  <div id="docs"></div>
+  <div class="bar">
+    <button id="quit">Quit</button>
+    <button id="close-first">Close the first document</button>
+    <button id="reset">Start over</button>
+  </div>
+  <ol id="log"></ol>
+</main>
+
+<unsaved-list></unsaved-list>
+
+<!-- The app's own "Save as" picker. It opens with showModal(), so it sits above the list. -->
+<dialog id="picker" aria-labelledby="picker-title">
+  <form method="dialog">
+    <h2 id="picker-title"></h2>
+    <label>File name <input id="picker-name" autocomplete="off"></label>
+    <menu>
+      <button type="button" id="picker-cancel">Cancel</button>
+      <button value="save" id="picker-save">Save</button>
+    </menu>
+  </form>
+</dialog>
+
+<script type="module">
+import "./unsaved-list.js";
+
+const $ = (id) => document.getElementById(id);
+const list = document.querySelector("unsaved-list");
+const SLOW_MS = Number(new URLSearchParams(location.search).get("slow")) || 2500;
+const START = [
+  { id: "report", name: "Report", path: "~/Documents/Report.txt", dirty: true },
+  { id: "budget", name: "Budget", path: "~/Documents/Budget.txt", dirty: true, slow: true },
+  { id: "notes", name: "Notes", path: "/shared/Notes.txt", dirty: true },
+  { id: "untitled", name: "Untitled", path: null, dirty: true },
+  { id: "letter", name: "Letter", path: "~/Documents/Letter.txt", dirty: false },
+];
+const SWITCHES = [["dirty", "Unsaved changes"], ["readOnly", "Read-only file"], ["fails", "Save will fail"], ["slow", "Slow save"]];
+let docs, front;
+
+function log(text) { const li = document.createElement("li"); li.textContent = text; $("log").append(li); }
+
+function render() {
+  $("docs").replaceChildren(...docs.map((d) => {
+    const row = document.createElement("div");
+    row.className = "doc" + (d.id === front ? " front" : ""); row.dataset.id = d.id;
+    const name = document.createElement("strong"); name.textContent = d.name;
+    const where = document.createElement("span"); where.className = "where"; where.textContent = d.path || "Not saved yet";
+    row.append(name, where);
+    for (const [key, label] of SWITCHES) {
+      const box = Object.assign(document.createElement("input"), { type: "checkbox", checked: !!d[key] });
+      box.dataset.k = key;
+      box.disabled = key === "readOnly" && !d.path;
+      box.onchange = () => { d[key] = box.checked; };
+      const l = document.createElement("label"); l.append(box, " " + label); row.append(l);
+    }
+    return row;
+  }));
+  if (!docs.length) $("docs").textContent = "Nothing is open. Press Start over.";
+}
+
+function reset() { docs = START.map((d) => ({ readOnly: false, fails: false, slow: false, ...d })); front = null; $("log").replaceChildren(); render(); }
+
+// The app's save. Resolving means saved; throwing means it failed, and the message is shown on the row.
+async function save(doc, path, signal) {
+  if (doc.slow) {
+    // A real app writes to a temporary file and moves it over the original only when it is complete (6.2),
+    // so abandoning here leaves the original as it was.
+    await new Promise((done, fail) => {
+      const t = setTimeout(done, SLOW_MS);
+      signal.addEventListener("abort", () => { clearTimeout(t); log(`${doc.name}: save abandoned; the original file is untouched`); fail(signal.reason); });
+    });
+  }
+  if (doc.fails) { log(`${doc.name}: save failed`); throw new Error("The disk is full. Free some space and try again."); }
+  Object.assign(doc, { path, dirty: false, readOnly: false });
+  log(`Saved ${doc.name} to ${path}`);
+}
+
+// The app's "Save as" picker: a path, or null when the user cancels. It names the document (3.1).
+function pick(doc, why) {
+  const picker = $("picker");
+  $("picker-title").textContent = why === "read-only" ? `“${doc.name}” is read-only. Save a copy as…` : `Save “${doc.name}” as…`;
+  $("picker-name").value = doc.name + ".txt";
+  picker.returnValue = "";
+  picker.showModal();
+  return new Promise((resolve) => picker.addEventListener("close", () => {
+    const name = $("picker-name").value.trim();
+    resolve(picker.returnValue === "save" && name ? "~/Documents/" + name : null);
+  }, { once: true }));
+}
+
+async function close(closing, what) {
+  const result = await list.ask(closing, {
+    save, pick,
+    noun: { one: "document", other: "documents" },
+    onShow: (doc) => { front = doc.id; render(); },
+  });
+  window.lastResult = result;
+  const gone = new Set(result.closed), names = (ids) => ids.map((id) => docs.find((d) => d.id === id).name).join(", ");
+  if (result.outcome === "proceeded") log(`${what}: closed ${result.closed.length}; not saved, as chosen: ${names(result.lost) || "none"}.`);
+  else log(`Cancelled. ${result.closed.length ? "Rows already answered stay answered." : "Everything is still open."}`);
+  docs = docs.filter((d) => !gone.has(d.id));
+  render();
+}
+
+$("picker-cancel").onclick = () => $("picker").close("cancel");
+$("quit").onclick = () => close(docs.slice(), "Quit");
+$("close-first").onclick = () => docs.length && close([docs[0]], "Close");
+$("reset").onclick = reset;
+reset();
+window.app = { get docs() { return docs; }, list, close, reset, render };
+</script>
+</body>
+</html>
