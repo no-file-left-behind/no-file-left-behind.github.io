@@ -10,6 +10,8 @@ GitHub's README view can't run a page inside a page, so the README links the dem
 {%- assign readme = readme
   | replace: "(SPEC.md)", "(SPEC.html)"
   | replace: "(CHECKLIST.md)", "(CHECKLIST.html)"
+  | replace: "(IMPLEMENT.md)", "(IMPLEMENT.html)"
+  | replace: "(scenarios/)", "(scenarios/README.html)"
   | replace: "(https://raykholo.github.io/no-file-left-behind/demo/)", "(#try-it)" -%}
 {%- assign parts = readme | split: "## The pattern in five rules" -%}
 {{ parts[0] | markdownify }}

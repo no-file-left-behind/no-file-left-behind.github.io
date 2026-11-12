@@ -19,7 +19,7 @@ fails, **nothing closes**.
 
 ![Three unsaved designs listed in one window, each with its own Save and Discard](images/solidcraft-reference.png)
 
-[**Try the demo**](https://raykholo.github.io/no-file-left-behind/demo/) · [**Read the specification**](SPEC.md) · [**Review checklist**](CHECKLIST.md)
+[**Try the demo**](https://raykholo.github.io/no-file-left-behind/demo/) · [**Read the specification**](SPEC.md) · [**Implement it**](IMPLEMENT.md) · [**Review checklist**](CHECKLIST.md)
 
 ## The pattern in five rules
 
@@ -46,8 +46,9 @@ thing to copy and users the same safe answer everywhere.
 
 ## Adopt it
 
-- **App makers:** check your app against the [checklist](CHECKLIST.md). Add it to your issue
-  tracker as a feature request and link here.
+- **App makers:** [implement it](IMPLEMENT.md), by hand or by handing your AI coding assistant
+  one link. It is a set of rules, not a library: build it your way, test it against the
+  [scenarios](scenarios/), check it against the [checklist](CHECKLIST.md), and say you conform.
 - **Toolkit and design-system makers:** a shared "save several" dialog in a toolkit brings the
   pattern to every app built on it.
 - **Users:** if an app you use asks you one file at a time, point its makers here.
