@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/hero-dark.png">
+  <img alt="No File Left Behind: closing many documents? Ask once, in one list, and never close anything if a save fails." src="images/hero-light.png">
+</picture>
+
 # No File Left Behind
 
 **When you close several documents at once, ask about them once, in one list, and never close

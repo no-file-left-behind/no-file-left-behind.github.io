@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>No File Left Behind — card</title>
+<!-- Source for images/hero-*.png and images/social-card.png. Rendered by images/source/render.js:
+     ?w=…&h=…&scheme=light|dark. Original artwork; no third-party assets. -->
+<style>
+  :root { --bg1: #0f1b33; --bg2: #16305c; --title: #ffffff; --sub: #b8c6e3; --card: #ffffff; --text: #1d2129;
+          --muted: #69707d; --line: #e3e6eb; --accent: #2f6fde; --ok: #1f8a4c; --tick: #2f6fde; --glow: rgba(74, 139, 242, 0.35); }
+  .light { --bg1: #eef3fb; --bg2: #dbe6f7; --title: #10203d; --sub: #46577a; --glow: rgba(47, 111, 222, 0.18); }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: var(--w); height: var(--h); overflow: hidden; }
+  body { font-family: "Inter", "IBM Plex Sans", "Noto Sans", system-ui, sans-serif;
+         background: radial-gradient(1200px 700px at 78% 40%, var(--glow), transparent 60%), linear-gradient(135deg, var(--bg1), var(--bg2));
+         display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: calc(var(--h) * 0.06);
+         padding: 0 calc(var(--w) * 0.06); }
+  .words h1 { color: var(--title); font-size: calc(var(--h) * 0.118); line-height: 1.02; letter-spacing: -0.02em; font-weight: 800; }
+  .words h1 span { color: var(--accent); }
+  .words p { color: var(--sub); font-size: calc(var(--h) * 0.042); line-height: 1.35; margin-top: calc(var(--h) * 0.04); max-width: 22ch; }
+  .words .tag { display: inline-block; margin-top: calc(var(--h) * 0.05); color: var(--sub); font-size: calc(var(--h) * 0.03);
+                border: 1px solid color-mix(in srgb, var(--sub) 45%, transparent); border-radius: 999px; padding: 0.3em 0.9em; }
+  .dialog { background: var(--card); color: var(--text); border-radius: calc(var(--h) * 0.03); padding: calc(var(--h) * 0.04);
+            box-shadow: 0 calc(var(--h) * 0.04) calc(var(--h) * 0.1) rgba(4, 10, 25, 0.35); font-size: calc(var(--h) * 0.032);
+            transform: rotate(-1.5deg); }
+  .dialog h2 { font-size: 1.2em; margin-bottom: 0.7em; }
+  .row { display: grid; grid-template-columns: 1.2em 1fr auto; gap: 0.15em 0.6em; align-items: center; padding: 0.45em 0;
+         border-top: 1px solid var(--line); }
+  .box { width: 1.05em; height: 1.05em; border-radius: 0.22em; background: var(--tick); display: grid; place-items: center; }
+  .box svg { width: 0.8em; height: 0.8em; }
+  .name { font-weight: 650; }
+  .where { grid-column: 2; color: var(--muted); font-size: 0.78em; }
+  .acts { display: flex; gap: 0.35em; }
+  .btn { border: 1px solid var(--line); border-radius: 0.35em; padding: 0.12em 0.55em; font-size: 0.78em; color: var(--text); }
+  .saved { grid-column: 2; color: var(--ok); font-size: 0.78em; font-weight: 600; }
+  .foot { display: flex; gap: 0.5em; justify-content: flex-end; margin-top: 0.8em; padding-top: 0.8em; border-top: 1px solid var(--line); }
+  .foot .btn { font-size: 0.85em; padding: 0.35em 0.9em; }
+  .foot .primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+  .foot .left { margin-right: auto; }
+</style>
+</head>
+<body>
+  <div class="words">
+    <h1>No File<br><span>Left Behind</span></h1>
+    <p>Closing many documents? Ask once, in one list — and never close anything if a save fails.</p>
+    <div class="tag">An open pattern for every app</div>
+  </div>
+  <div class="dialog" aria-hidden="true">
+    <h2>Save changes to 3 documents?</h2>
+    <div class="row"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="name">Bracket</span><span class="acts"><span class="btn">Save</span><span class="btn">Discard</span></span>
+      <span class="saved">✓ Saved</span></div>
+    <div class="row"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="name">Quarterly report</span><span class="acts"><span class="btn">Save</span><span class="btn">Discard</span></span>
+      <span class="where">~/Documents/Quarterly report.odt</span></div>
+    <div class="row"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span class="name">Untitled</span><span class="acts"><span class="btn">Save</span><span class="btn">Discard</span></span>
+      <span class="where">Not saved yet</span></div>
+    <div class="foot"><span class="btn left">Don't Save</span><span class="btn">Cancel</span><span class="btn primary">Save Selected</span></div>
+  </div>
+<script>
+  const q = new URLSearchParams(location.search);
+  document.documentElement.style.setProperty("--w", (q.get("w") || 1280) + "px");
+  document.documentElement.style.setProperty("--h", (q.get("h") || 640) + "px");
+  if (q.get("scheme") === "light") document.documentElement.classList.add("light");
+</script>
+</body>
+</html>
