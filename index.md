@@ -22,8 +22,9 @@ GitHub's README view can't run a page inside a page, so the README links the dem
 <script>
   // The demo says how tall it is, so the frame fits it without a scrollbar of its own.
   window.addEventListener("message", (e) => {
-    const h = e.data && e.data.nflbHeight;
-    if (typeof h === "number" && h > 0) document.getElementById("demo-frame").style.height = Math.max(560, Math.ceil(h)) + "px";
+    const frame = document.getElementById("demo-frame");
+    const h = e.source === frame.contentWindow && e.data && e.data.nflbHeight;
+    if (typeof h === "number" && h > 0) frame.style.height = Math.max(560, Math.ceil(h)) + "px";
   });
 </script>
 {{ "## The pattern in five rules" | append: parts[1] | markdownify }}

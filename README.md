@@ -25,7 +25,8 @@ fails, **nothing closes**.
 
 1. **One list, not N prompts.** Closing two or more unsaved documents at once shows one window
    with a row each. One unsaved document keeps the familiar single prompt.
-2. **Every row starts ticked.** The safe default is to keep work.
+2. **Every row starts ticked.** The safe default is to keep work, and the window says plainly
+   that an unticked document closes without saving.
 3. **Each row answers for itself.** A row's own Save or Discard handles just that document, so
    you can deal with the one you're unsure about and leave the rest.
 4. **No file left behind.** If any save fails, or you cancel a "Save as" picker, nothing closes:

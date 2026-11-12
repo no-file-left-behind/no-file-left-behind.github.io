@@ -23,7 +23,8 @@
   .dialog { background: var(--card); color: var(--text); border-radius: calc(var(--h) * 0.03); padding: calc(var(--h) * 0.04);
             box-shadow: 0 calc(var(--h) * 0.04) calc(var(--h) * 0.1) rgba(4, 10, 25, 0.35); font-size: calc(var(--h) * 0.032);
             transform: rotate(-1.5deg); }
-  .dialog h2 { font-size: 1.2em; margin-bottom: 0.7em; }
+  .dialog h2 { font-size: 1.2em; margin-bottom: 0.25em; }
+  .hint { color: var(--muted); font-size: 0.78em; margin-bottom: 0.7em; }
   .row { display: grid; grid-template-columns: 1.2em 1fr auto; gap: 0.15em 0.6em; align-items: center; padding: 0.45em 0;
          border-top: 1px solid var(--line); }
   .box { width: 1.05em; height: 1.05em; border-radius: 0.22em; background: var(--tick); display: grid; place-items: center; }
@@ -47,9 +48,10 @@
   </div>
   <div class="dialog" aria-hidden="true">
     <h2>Save changes to 3 documents?</h2>
+    <p class="hint">Ticked documents are saved; the rest close without saving.</p>
     <div class="row"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <span class="name">Bracket</span><span class="acts"><span class="btn">Save</span><span class="btn">Discard</span></span>
-      <span class="saved">✓ Saved</span></div>
+      <span class="where">~/Designs/Bracket.step</span></div>
     <div class="row"><span class="box"><svg viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
       <span class="name">Quarterly report</span><span class="acts"><span class="btn">Save</span><span class="btn">Discard</span></span>
       <span class="where">~/Documents/Quarterly report.odt</span></div>
