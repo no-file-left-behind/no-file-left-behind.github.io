@@ -56,7 +56,7 @@ thing to copy and users the same safe answer everywhere.
 
 | App | Since | Notes |
 |---|---|---|
-| [SolidCraft](https://github.com/tangency-labs/solidcraft) | 0.40 | The reference: quitting, updating and closing several tabs ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)) |
+| [SolidCraft](https://github.com/tangency-labs/solidcraft) | 0.40 | The reference: quitting, updating and closing several tabs ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)). Not yet at 0.2: the line saying what unticking means (2.6), keeping the list open with the reason after a failed save (3.1.1, 3.1.3, 3.4) and numbering untitled designs (6.3) are on the way. |
 
 Using it in your app? Open a pull request adding a row.
 
