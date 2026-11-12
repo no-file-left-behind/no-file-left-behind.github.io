@@ -1,6 +1,6 @@
 # No File Left Behind — specification
 
-Version 0.4.0-rc1 (release candidate: it becomes 0.4.0 unless a problem is found). The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
+Version 0.4.0. The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
 as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119). [What changed](#changes)
 since earlier versions is at the end.
 
