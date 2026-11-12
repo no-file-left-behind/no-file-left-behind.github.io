@@ -49,7 +49,11 @@ The spec's first line gives its version. Quote that version in what you report.
    "proceeded", stop on "stopped".
 7. **Check the window against the checklist,** line by line, in the running app if you can drive
    it, and say which lines you verified by running and which only by reading the code.
-8. **Report** with the conformance statement below.
+8. **Look at the window.** Take a picture of it in the running app and compare it with the app's
+   other dialogs, and with the window it replaces if there was one: the list, the single prompt,
+   a row whose save failed, a long name and a long path. It must look like it belongs to the app.
+   If you can't take a picture, say so in the report instead of calling the look done.
+9. **Report** with the conformance statement below.
 
 ## Where implementations go wrong
 
@@ -73,6 +77,11 @@ These are the mistakes found most often, including in the app the pattern came f
 - **A cancelled or failed save leaving half a file** where the original was (6.2): write to a
   temporary file and replace on success.
 - **A forced quit losing work.** If the system won't wait, keep a recoverable copy (6.4).
+- **A window that works and looks wrong.** The scenarios test the rules, not the look. The usual
+  slips: a clickable name drawn as a boxed button (draw it as text, with a hover and a focus
+  state); the help line out of line with the title and rows; a path wrapping mid-word (keep it to
+  one line, shorten the middle, show the whole path on hover); a restyle of a window that
+  already looked right.
 
 ## Don't
 
