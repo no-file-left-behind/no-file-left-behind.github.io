@@ -11,7 +11,8 @@ GitHub's README view can't run a page inside a page, so the README links the dem
   | replace: "(SPEC.md)", "(SPEC.html)"
   | replace: "(CHECKLIST.md)", "(CHECKLIST.html)"
   | replace: "(IMPLEMENT.md)", "(IMPLEMENT.html)"
-  | replace: "(https://no-file-left-behind.github.io/demo/)", "(#try-it)" -%}
+  | replace: "(https://no-file-left-behind.github.io/demo/)", "(#try-it)"
+  | replace: "<!-- adopters -->", '<div id="adopters"></div>' -%}
 {%- assign parts = readme | split: "## The pattern in five rules" -%}
 {{ parts[0] | markdownify }}
 <section id="try-it" class="try-it">
@@ -37,3 +38,22 @@ GitHub's README view can't run a page inside a page, so the README links the dem
   });
 </script>
 {{ "## The pattern in five rules" | append: parts[1] | markdownify }}
+<script>
+  // The list of apps lives in its own repository; show it here as a table. Without it, the link above still works.
+  fetch("https://raw.githubusercontent.com/no-file-left-behind/adopters/main/adopters.json").then((r) => r.json()).then(({ apps }) => {
+    const box = document.getElementById("adopters");
+    if (!box || !Array.isArray(apps) || !apps.length) return;
+    const el = (tag, text) => { const e = document.createElement(tag); if (text !== undefined) e.textContent = text; return e; };
+    const table = el("table"), head = el("tr");
+    for (const h of ["App", "In the app since", "Against the specification", "Notes"]) head.append(el("th", h));
+    table.append(head);
+    for (const a of apps) {
+      const row = el("tr"), name = el("td");
+      if (/^https:\/\//.test(a.url)) { const link = el("a", a.name); link.href = a.url; name.append(link); } else name.textContent = a.name;
+      const meets = a.status === "conforms" ? `Conforms to ${a.spec_version}` : `Partly meets ${a.spec_version}; not yet: ${(a.missing || []).join(", ")}`;
+      row.append(name, el("td", a.app_version ? `${a.name} ${a.app_version}` : ""), el("td", meets), el("td", a.notes || ""));
+      table.append(row);
+    }
+    box.append(table);
+  }).catch(() => {});
+</script>

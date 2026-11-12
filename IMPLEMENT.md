@@ -51,7 +51,6 @@ If a MUST is unmet, say "Partly implements" and list what is missing.
 ## Tell us, if you like
 
 You don't have to credit the project, ask permission, or tell anyone. Everything here is free
-for any use. But we'd love to know who uses it:
-[tell us in two minutes](https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml),
-or open a pull request adding your app to the
-[adopters table](https://github.com/no-file-left-behind/no-file-left-behind.github.io#who-uses-it).
+for any use. But we'd love to know who uses it. [The list](https://github.com/no-file-left-behind/adopters#readme) has its own repository:
+[fill in a short form](https://github.com/no-file-left-behind/adopters/issues/new?template=we-use-it.yml) and we add your app, or add it yourself with a
+[one-file pull request](https://github.com/no-file-left-behind/adopters#add-your-app).

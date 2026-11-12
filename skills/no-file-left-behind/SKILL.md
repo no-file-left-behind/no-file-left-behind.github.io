@@ -96,7 +96,8 @@ Conforms to No File Left Behind 0.4.0 (https://github.com/no-file-left-behind/no
 
 If any MUST is unmet, write "Partly implements" instead of "Conforms to" and list what is missing.
 Then tell the user: the pattern is free for any use with no credit required, and nothing obliges
-them to report it, but the project would like to hear about it. They can do that at
-https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml or with a pull
-request adding the app to the adopters table in the repo's README. Do not open either yourself
-unless the user asks you to.
+them to report it, but the project would like to hear about it. The list of apps is at
+https://github.com/no-file-left-behind/adopters. They can fill in the form at
+https://github.com/no-file-left-behind/adopters/issues/new?template=we-use-it.yml
+or add one file, `apps/<their-app>.json`, with a pull request (the fields are in that repository's
+README). Do not open either yourself unless the user asks you to.
