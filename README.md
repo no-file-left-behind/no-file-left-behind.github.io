@@ -14,7 +14,7 @@ fails, **nothing closes**.
 
 ![Three unsaved designs listed in one window, each with its own Save and Discard](images/solidcraft-reference.png)
 
-[**Try the demo**](demo/index.html) · [**Read the specification**](SPEC.md) · [**Review checklist**](CHECKLIST.md)
+[**Try the demo**](https://raykholo.github.io/no-file-left-behind/demo/) · [**Read the specification**](SPEC.md) · [**Review checklist**](CHECKLIST.md)
 
 ## The pattern in five rules
 
