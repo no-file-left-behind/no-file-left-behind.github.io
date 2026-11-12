@@ -46,5 +46,12 @@ Conforms to No File Left Behind 0.3 (https://github.com/raykholo/no-file-left-be
 - Checklist: all lines met
 ```
 
-If a MUST is unmet, say "Partly implements" and list what is missing. Then open a pull request
-adding your app to the [adopters table](https://github.com/raykholo/no-file-left-behind#who-uses-it).
+If a MUST is unmet, say "Partly implements" and list what is missing.
+
+## Tell us, if you like
+
+You don't have to credit the project, ask permission, or tell anyone. Everything here is free
+for any use. But we'd love to know who uses it:
+[tell us in two minutes](https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml),
+or open a pull request adding your app to the
+[adopters table](https://github.com/raykholo/no-file-left-behind#who-uses-it).

@@ -59,9 +59,14 @@ thing to copy and users the same safe answer everywhere.
 |---|---|---|
 | [SolidCraft](https://github.com/tangency-labs/solidcraft) | 0.40 | The reference: quitting, updating and closing several tabs ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)). Not yet at 0.2: the line saying what unticking means (2.6), keeping the list open with the reason after a failed save (3.1.1, 3.1.3, 3.4) and numbering untitled designs (6.3) are on the way. |
 
-Using it in your app? Open a pull request adding a row.
+Using it in your app? You don't have to tell anyone, but we'd love to know:
+[tell us](https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml), or open a pull request adding a row.
 
 ## Licence
 
-The specification, checklist and images are [CC BY 4.0](LICENSE-docs): use them, adapt them,
-credit "No File Left Behind". The demo's code is [MIT](LICENSE-code).
+Do whatever you like with it. No credit needed, no conditions, no need to ask.
+
+- The specification, checklist, scenarios and images are [CC0 1.0](LICENSE-docs): public domain.
+- All the code is [0BSD](LICENSE-code): use it for anything, with no notice to keep.
+
+Contributions are accepted on the same terms.

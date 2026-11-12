@@ -95,5 +95,8 @@ Conforms to No File Left Behind 0.3 (https://github.com/raykholo/no-file-left-be
 ```
 
 If any MUST is unmet, write "Partly implements" instead of "Conforms to" and list what is missing.
-Then tell the user they can add the app to the adopters table with a pull request to the repo's
-README.
+Then tell the user: the pattern is free for any use with no credit required, and nothing obliges
+them to report it, but the project would like to hear about it. They can do that at
+https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml or with a pull
+request adding the app to the adopters table in the repo's README. Do not open either yourself
+unless the user asks you to.

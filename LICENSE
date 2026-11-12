@@ -1,8 +1,0 @@
-No File Left Behind is under two licences.
-
-- The specification, the checklist, the README and the images (everything that is not code)
-  are under Creative Commons Attribution 4.0 International (CC BY 4.0). Full text: LICENSE-docs.
-  Credit "No File Left Behind" and link to https://github.com/raykholo/no-file-left-behind.
-
-- The demo's code (demo/) and the site's code (_layouts/, _includes/, assets/, index.md,
-  images/source/) are under the MIT licence. Full text: LICENSE-code.
