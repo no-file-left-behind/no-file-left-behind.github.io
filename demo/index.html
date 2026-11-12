@@ -249,8 +249,9 @@ function closeAll() { for (const id of SHADES) $(id).classList.remove("open"); b
 function open(id, focus) {
   $(id).classList.add("open"); behind();
   (focus || $(id).querySelector("button.primary")).focus();
-  // On the front page the demo sits in a frame: bring the prompt into view, clear of the page's top bar.
-  if (embedded) $(id).querySelector(".dialog").scrollIntoView({ block: "nearest" });
+  // On the front page the demo sits in a frame: tell the page where the prompt is, so it can bring it
+  // into view, clear of its top bar.
+  if (embedded) { const r = $(id).querySelector(".dialog").getBoundingClientRect(); parent.postMessage({ nflbPrompt: { top: r.top, bottom: r.bottom } }, "*"); }
 }
 // When the prompts are gone, focus returns to the button that started the action, or the nearest thing left.
 function backToPage() {

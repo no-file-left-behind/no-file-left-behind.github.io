@@ -25,6 +25,14 @@ GitHub's README view can't run a page inside a page, so the README links the dem
     const frame = document.getElementById("demo-frame");
     const h = e.source === frame.contentWindow && e.data && e.data.nflbHeight;
     if (typeof h === "number" && h > 0) frame.style.height = Math.max(560, Math.ceil(h)) + "px";
+    // A prompt opened in the demo: scroll just enough to show all of it below the top bar.
+    const at = e.source === frame.contentWindow && e.data && e.data.nflbPrompt;
+    if (at && typeof at.top === "number" && typeof at.bottom === "number") {
+      const y = frame.getBoundingClientRect().top, bar = document.querySelector(".topbar").getBoundingClientRect().bottom + 12;
+      const over = bar - (y + at.top), under = y + at.bottom + 12 - window.innerHeight;
+      if (over > 0) window.scrollBy({ top: -over, behavior: "smooth" });
+      else if (under > 0) window.scrollBy({ top: Math.min(under, -over), behavior: "smooth" });
+    }
   });
 </script>
 {{ "## The pattern in five rules" | append: parts[1] | markdownify }}
