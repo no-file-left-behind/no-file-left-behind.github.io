@@ -1,0 +1,15 @@
+# GitHub Pages: the main page is this README. Its title and link-preview card.
+title: No File Left Behind
+description: "An open pattern for closing several documents at once: ask once, in one list, and never close anything if a save fails."
+url: https://raykholo.github.io
+baseurl: /no-file-left-behind
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /images/social-card.png
+        width: 1280
+        height: 640
+exclude:
+  - images/source
