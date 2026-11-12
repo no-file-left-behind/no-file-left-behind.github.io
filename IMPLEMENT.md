@@ -8,11 +8,11 @@ language and toolkit. You conform when you meet the rules, and you are the one w
 Open your app's code in your assistant and paste this:
 
 ```
-Implement No File Left Behind in this app. Follow
-https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/skills/no-file-left-behind/SKILL.md
+Implement No File Left Behind in this app.
+Start at https://raykholo.github.io/no-file-left-behind/llms.txt
 ```
 
-That file tells it what to read, the steps to take, the mistakes implementations usually make,
+That link leads it to [the procedure](skills/no-file-left-behind/SKILL.md), which tells it what to read, the steps to take, the mistakes implementations usually make,
 and how to report what it did. It will find every way your app closes several documents, test
 the rules against the [scenarios](scenarios/), build the window in your toolkit, and go through
 the [checklist](CHECKLIST.md).
