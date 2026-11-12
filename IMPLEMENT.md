@@ -48,6 +48,20 @@ Conforms to No File Left Behind 0.4.0 (https://github.com/no-file-left-behind/no
 
 If a MUST is unmet, say "Partly implements" and list what is missing.
 
+### Make the pull request itself the statement
+
+If your app is on GitHub, put the statement in a small file, `.nflb.json`, at the top of your
+repository, and add or change it **in the same pull request as the work**:
+
+```json
+{ "name": "My App", "url": "https://example.org/my-app", "app_version": "3.2", "spec_version": "0.4.0", "status": "conforms" }
+```
+
+Merging that pull request is then the declaration: the code and the statement land together.
+With [one small workflow](https://github.com/no-file-left-behind/adopters#2-declare-it-in-your-own-repository) the pull request says so
+itself ("Merging this pull request declares that My App conforms to No File Left Behind 0.4.0"),
+and the [list of apps](https://github.com/no-file-left-behind/adopters#readme) follows the file from then on, with nothing more for you to do.
+
 ## Tell us, if you like
 
 You don't have to credit the project, ask permission, or tell anyone. Everything here is free

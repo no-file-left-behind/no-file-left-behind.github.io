@@ -95,6 +95,16 @@ Conforms to No File Left Behind 0.4.0 (https://github.com/no-file-left-behind/no
 ```
 
 If any MUST is unmet, write "Partly implements" instead of "Conforms to" and list what is missing.
+
+If the app's repository is on GitHub, also offer to add the declaration to the same pull request,
+so that merging it is the statement:
+
+- `.nflb.json` at the top of the repository, with `name`, `url`, `app_version` (the app's own
+  version), `spec_version` (the specification's), `status` (`"conforms"` or `"partly"`) and, with
+  `"partly"`, `missing` (the unmet rule numbers). Be honest: `"conforms"` only if every MUST in
+  sections 1 to 6 is met.
+- Optionally the workflow from https://github.com/no-file-left-behind/adopters#2-declare-it-in-your-own-repository
+  which comments on the pull request with what merging will declare.
 Then tell the user: the pattern is free for any use with no credit required, and nothing obliges
 them to report it, but the project would like to hear about it. The list of apps is at
 https://github.com/no-file-left-behind/adopters. They can fill in the form at
