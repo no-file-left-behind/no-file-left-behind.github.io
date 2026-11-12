@@ -57,9 +57,12 @@ thing to copy and users the same safe answer everywhere.
 
 ## Who uses it
 
-| App | Since | Notes |
-|---|---|---|
-| [SolidCraft](https://github.com/tangency-labs/solidcraft) | 0.40 | The reference: quitting, updating and closing several tabs ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)). Not yet at 0.2: the line saying what unticking means (2.6), keeping the list open with the reason after a failed save (3.1.1, 3.1.3, 3.4) and numbering untitled designs (6.3) are on the way. |
+| App | In the app since | Against the specification | Notes |
+|---|---|---|---|
+| [SolidCraft](https://github.com/tangency-labs/solidcraft) | SolidCraft 0.40 | Partly meets 0.4.0; not yet: 2.6, 3.1.1, 3.1.3, 3.4, 6.3, 6.5 | The app the pattern came from ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)). The rules it doesn't meet yet are being worked on. |
+
+"In the app since" is the app's own version. "Against the specification" is the version of the
+[specification](SPEC.md) its makers checked it against.
 
 Using it in your app? You don't have to tell anyone, but we'd love to know:
 [tell us](https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml), or open a pull request adding a row.
