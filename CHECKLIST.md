@@ -1,6 +1,6 @@
 # Conformance checklist
 
-For version 0.2 of the [specification](SPEC.md). Copy this into an issue or a review; each line
+For version 0.3 of the [specification](SPEC.md). Copy this into an issue or a review; each line
 points to its rule.
 
 **When it shows**
@@ -36,4 +36,7 @@ points to its rule.
 - [ ] A slow save shows on its row; Cancel still works and never leaves a half-written file in place of the original (6.2)
 - [ ] Rows with the same name can be told apart (6.3)
 - [ ] A forced quit keeps a recoverable copy of every unsaved document (6.4)
-- [ ] A document that changes while the list is open keeps its row and saves its latest state (6.5)
+- [ ] A document that changes while the list is open keeps its row, or gets one, and saves its latest state (6.5)
+
+**The rules, tested**
+- [ ] The [scenarios](scenarios/) pass against the implementation

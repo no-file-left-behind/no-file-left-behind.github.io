@@ -13,3 +13,5 @@ defaults:
         height: 640
 exclude:
   - images/source
+  - implementations
+  - scenarios/reference

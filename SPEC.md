@@ -1,8 +1,8 @@
 # No File Left Behind — specification
 
-Version 0.2 (draft). The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
+Version 0.3 (draft). The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
 as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119). [What changed](#changes)
-since 0.1 is at the end.
+since earlier versions is at the end.
 
 ## 1. When it applies
 
@@ -115,7 +115,9 @@ of those documents have unsaved changes, it asks about them **once, in one list*
   keep a recoverable copy of every unsaved document (autosave, crash recovery) rather than lose
   one.
 - **6.5 A document changes while the list is open** (an autosave, a background edit). Its row
-  MUST stay, and saving MUST save its latest state.
+  MUST stay, and saving MUST save its latest state. A row that had already saved needs saving
+  again. A document in the set that had no unsaved changes and gains some MUST get a row,
+  ticked: it must not close unasked.
 
 ## 7. Choosing the old behaviour
 
@@ -133,10 +135,18 @@ of those documents have unsaved changes, it asks about them **once, in one list*
 ## Conformance
 
 An application conforms to No File Left Behind when it meets every MUST in sections 1 to 6.
-The [checklist](CHECKLIST.md) lists them for a review. Say which version you checked against:
-"conforms to No File Left Behind 0.2".
+The [checklist](CHECKLIST.md) lists them for a review, and the [scenarios](scenarios/) test the
+rules that don't depend on a window: run them against your implementation. Say which version
+you checked against: "conforms to No File Left Behind 0.3".
 
 ## Changes
+
+**0.3**
+
+- 6.5: a document that gains unsaved changes while the list is open gets a row, and one that
+  had saved needs saving again.
+- New: [scenarios](scenarios/), the rules as data with a reference model, for testing an
+  implementation in any language.
 
 **0.2**
 
