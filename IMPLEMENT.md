@@ -9,7 +9,7 @@ Open your app's code in your assistant and paste this:
 
 ```
 Implement No File Left Behind in this app.
-Start at https://raykholo.github.io/no-file-left-behind/llms.txt
+Start at https://no-file-left-behind.github.io/llms.txt
 ```
 
 That link leads it to [the procedure](skills/no-file-left-behind/SKILL.md), which tells it what to read, the steps to take, the mistakes implementations usually make,
@@ -18,17 +18,17 @@ the rules against the [scenarios](scenarios/), build the window in your toolkit,
 the [checklist](CHECKLIST.md).
 
 - **If your assistant supports skills,** copy the folder
-  [`skills/no-file-left-behind`](https://github.com/raykholo/no-file-left-behind/tree/main/skills/no-file-left-behind)
+  [`skills/no-file-left-behind`](https://github.com/no-file-left-behind/no-file-left-behind.github.io/tree/main/skills/no-file-left-behind)
   into its skills folder. It then loads by itself whenever you ask about unsaved-changes prompts.
 - **If it reads `AGENTS.md` or `llms.txt`,** this project has both:
-  [AGENTS.md](https://github.com/raykholo/no-file-left-behind/blob/main/AGENTS.md) and
-  [llms.txt](https://raykholo.github.io/no-file-left-behind/llms.txt).
+  [AGENTS.md](https://github.com/no-file-left-behind/no-file-left-behind.github.io/blob/main/AGENTS.md) and
+  [llms.txt](https://no-file-left-behind.github.io/llms.txt).
 
 ## By hand
 
 1. Read the [specification](SPEC.md). It is short.
 2. Keep the rules in a small model with no window in it. There is a
-   [reference model](https://github.com/raykholo/no-file-left-behind/blob/main/scenarios/reference/model.mjs)
+   [reference model](https://github.com/no-file-left-behind/no-file-left-behind.github.io/blob/main/scenarios/reference/model.mjs)
    of about 150 lines to port, or write your own.
 3. Run the [scenarios](scenarios/) against your model: 32 cases, each a list of inputs and what
    the window must show after them.
@@ -41,7 +41,7 @@ Nobody certifies this. You assert it, and the checklist and the scenarios are ho
 check. Put a statement like this in your documentation or release notes:
 
 ```
-Conforms to No File Left Behind 0.3 (https://github.com/raykholo/no-file-left-behind)
+Conforms to No File Left Behind 0.3 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
 - Scenarios: 32 of 32 pass
 - Checklist: all lines met
 ```
@@ -52,6 +52,6 @@ If a MUST is unmet, say "Partly implements" and list what is missing.
 
 You don't have to credit the project, ask permission, or tell anyone. Everything here is free
 for any use. But we'd love to know who uses it:
-[tell us in two minutes](https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml),
+[tell us in two minutes](https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml),
 or open a pull request adding your app to the
-[adopters table](https://github.com/raykholo/no-file-left-behind#who-uses-it).
+[adopters table](https://github.com/no-file-left-behind/no-file-left-behind.github.io#who-uses-it).

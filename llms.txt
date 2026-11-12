@@ -6,22 +6,22 @@ To implement it in an application, follow the skill. It names everything else yo
 
 ## Implement
 
-- [Skill: implementing the pattern](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/skills/no-file-left-behind/SKILL.md): the steps, the usual mistakes, how to report conformance
-- [AGENTS.md](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/AGENTS.md): orientation for AI coding assistants
+- [Skill: implementing the pattern](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/skills/no-file-left-behind/SKILL.md): the steps, the usual mistakes, how to report conformance
+- [AGENTS.md](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/AGENTS.md): orientation for AI coding assistants
 
 ## The pattern
 
-- [Specification](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/SPEC.md): the rules, MUST/SHOULD/MAY
-- [Checklist](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/CHECKLIST.md): one line per rule, for a review
-- [Overview](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/README.md): the pattern in five rules
+- [Specification](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/SPEC.md): the rules, MUST/SHOULD/MAY
+- [Checklist](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/CHECKLIST.md): one line per rule, for a review
+- [Overview](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/README.md): the pattern in five rules
 
 ## Test it
 
-- [Scenario format](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/README.md)
-- [Scenarios](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/scenarios.json): the rules as data
-- [Reference model](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/reference/model.mjs): about 150 lines, to port
+- [Scenario format](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/README.md)
+- [Scenarios](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/scenarios.json): the rules as data
+- [Reference model](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/reference/model.mjs): about 150 lines, to port
 
 ## See it
 
-- [Demo](https://raykholo.github.io/no-file-left-behind/demo/): a working window in the browser
-- [Demo source](https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/demo/index.html)
+- [Demo](https://no-file-left-behind.github.io/demo/): a working window in the browser
+- [Demo source](https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/demo/index.html)

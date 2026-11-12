@@ -15,11 +15,11 @@ Read these before writing code. They are short.
 
 | What | Where |
 |---|---|
-| The rules (read all of it) | https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/SPEC.md |
-| The review checklist | https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/CHECKLIST.md |
-| The rules as test data, and their format | https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/README.md and https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/scenarios.json |
-| A reference model to port (about 150 lines) | https://raw.githubusercontent.com/raykholo/no-file-left-behind/main/scenarios/reference/model.mjs |
-| A working window to look at | https://raykholo.github.io/no-file-left-behind/demo/ (source: `demo/index.html`) |
+| The rules (read all of it) | https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/SPEC.md |
+| The review checklist | https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/CHECKLIST.md |
+| The rules as test data, and their format | https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/README.md and https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/scenarios.json |
+| A reference model to port (about 150 lines) | https://raw.githubusercontent.com/no-file-left-behind/no-file-left-behind.github.io/main/scenarios/reference/model.mjs |
+| A working window to look at | https://no-file-left-behind.github.io/demo/ (source: `demo/index.html`) |
 
 The spec's first line gives its version. Quote that version in what you report.
 
@@ -87,7 +87,7 @@ Nobody certifies this. The app's makers assert it, and the checklist and the sce
 anyone can check. Put this in the pull request and offer it for the app's documentation:
 
 ```
-Conforms to No File Left Behind 0.3 (https://github.com/raykholo/no-file-left-behind)
+Conforms to No File Left Behind 0.3 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
 - Scenarios: 32 of 32 pass (<path to the test>)
 - Checklist: all lines met / all except: <line and why>
 - Verified by running: <which lines>. By reading the code only: <which lines>.
@@ -97,6 +97,6 @@ Conforms to No File Left Behind 0.3 (https://github.com/raykholo/no-file-left-be
 If any MUST is unmet, write "Partly implements" instead of "Conforms to" and list what is missing.
 Then tell the user: the pattern is free for any use with no credit required, and nothing obliges
 them to report it, but the project would like to hear about it. They can do that at
-https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml or with a pull
+https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml or with a pull
 request adding the app to the adopters table in the repo's README. Do not open either yourself
 unless the user asks you to.

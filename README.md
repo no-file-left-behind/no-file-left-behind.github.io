@@ -19,7 +19,7 @@ fails, **nothing closes**.
 
 ![Three unsaved designs listed in one window, each with its own Save and Discard](images/solidcraft-reference.png)
 
-[**Try the demo**](https://raykholo.github.io/no-file-left-behind/demo/) · [**Read the specification**](SPEC.md) · [**Implement it**](IMPLEMENT.md) · [**Review checklist**](CHECKLIST.md)
+[**Try the demo**](https://no-file-left-behind.github.io/demo/) · [**Read the specification**](SPEC.md) · [**Implement it**](IMPLEMENT.md) · [**Review checklist**](CHECKLIST.md)
 
 ## The pattern in five rules
 
@@ -60,7 +60,7 @@ thing to copy and users the same safe answer everywhere.
 | [SolidCraft](https://github.com/tangency-labs/solidcraft) | 0.40 | The reference: quitting, updating and closing several tabs ([pull request](https://github.com/tangency-labs/solidcraft/pull/11683)). Not yet at 0.2: the line saying what unticking means (2.6), keeping the list open with the reason after a failed save (3.1.1, 3.1.3, 3.4) and numbering untitled designs (6.3) are on the way. |
 
 Using it in your app? You don't have to tell anyone, but we'd love to know:
-[tell us](https://github.com/raykholo/no-file-left-behind/issues/new?template=we-use-it.yml), or open a pull request adding a row.
+[tell us](https://github.com/no-file-left-behind/no-file-left-behind.github.io/issues/new?template=we-use-it.yml), or open a pull request adding a row.
 
 ## Licence
 

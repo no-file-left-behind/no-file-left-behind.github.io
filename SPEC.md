@@ -161,4 +161,4 @@ you checked against: "conforms to No File Left Behind 0.3".
 - 6.2: what Cancel does during a slow save.
 - 6.3: never-saved documents with the same name must be told apart.
 
-**0.1** — the first draft ([tagged `v0.1`](https://github.com/raykholo/no-file-left-behind/tree/v0.1)).
+**0.1** — the first draft ([tagged `v0.1`](https://github.com/no-file-left-behind/no-file-left-behind.github.io/tree/v0.1)).
