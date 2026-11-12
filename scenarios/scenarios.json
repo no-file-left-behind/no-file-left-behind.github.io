@@ -1,5 +1,5 @@
 {
- "spec": "0.3",
+ "spec": "0.4.0",
  "about": "No File Left Behind: the rules as scenarios. See README.md in this folder for the format.",
  "scenarios": [
   {
@@ -1970,6 +1970,304 @@
      "expect": {
       "prompt": "list",
       "count": 2
+     }
+    }
+   ]
+  },
+  {
+   "id": "changed-during-run",
+   "rules": [
+    "6.5",
+    "3.1.2"
+   ],
+   "title": "A document that saved and then changes while the others are still saving does not close unasked: the list stays",
+   "docs": [
+    {
+     "id": "bracket",
+     "name": "Bracket",
+     "path": "~/Designs/Bracket.sc",
+     "dirty": true
+    },
+    {
+     "id": "lid",
+     "name": "Lid",
+     "path": "~/Designs/Lid.sc",
+     "dirty": true
+    }
+   ],
+   "steps": [
+    {
+     "do": "saveSelected"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "do": "docChanged",
+     "id": "bracket"
+    },
+    {
+     "expect": {
+      "request": {
+       "type": "save",
+       "id": "lid"
+      }
+     }
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "expect": {
+      "prompt": "list",
+      "outcome": null,
+      "closed": [],
+      "lost": [],
+      "count": 1,
+      "rows": [
+       {
+        "id": "bracket",
+        "state": "unsaved",
+        "ticked": true
+       },
+       {
+        "id": "lid",
+        "state": "saved"
+       }
+      ]
+     }
+    },
+    {
+     "do": "saveSelected"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "expect": {
+      "outcome": "proceeded",
+      "lost": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "clean-document-changes-during-run",
+   "rules": [
+    "6.5",
+    "3.1.2"
+   ],
+   "title": "A document that gains changes during a run of saves gets a row and holds the list open",
+   "docs": [
+    {
+     "id": "bracket",
+     "name": "Bracket",
+     "path": "~/Designs/Bracket.sc",
+     "dirty": true
+    },
+    {
+     "id": "lid",
+     "name": "Lid",
+     "path": "~/Designs/Lid.sc",
+     "dirty": true
+    },
+    {
+     "id": "gearbox",
+     "name": "Gearbox",
+     "path": "~/Designs/Gearbox.sc",
+     "dirty": false
+    }
+   ],
+   "steps": [
+    {
+     "do": "saveSelected"
+    },
+    {
+     "do": "docChanged",
+     "id": "gearbox"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "expect": {
+      "prompt": "list",
+      "outcome": null,
+      "closed": [],
+      "lost": [],
+      "count": 1,
+      "rows": [
+       {
+        "id": "bracket",
+        "state": "saved"
+       },
+       {
+        "id": "lid",
+        "state": "saved"
+       },
+       {
+        "id": "gearbox",
+        "state": "unsaved",
+        "ticked": true
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "changed-while-being-saved",
+   "rules": [
+    "6.5"
+   ],
+   "title": "A change that arrives while that document is being saved leaves it needing a save",
+   "docs": [
+    {
+     "id": "bracket",
+     "name": "Bracket",
+     "path": "~/Designs/Bracket.sc",
+     "dirty": true
+    },
+    {
+     "id": "lid",
+     "name": "Lid",
+     "path": "~/Designs/Lid.sc",
+     "dirty": true
+    }
+   ],
+   "steps": [
+    {
+     "do": "saveSelected"
+    },
+    {
+     "expect": {
+      "request": {
+       "type": "save",
+       "id": "bracket"
+      }
+     }
+    },
+    {
+     "do": "docChanged",
+     "id": "bracket"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "expect": {
+      "prompt": "list",
+      "outcome": null,
+      "closed": [],
+      "count": 1,
+      "rows": [
+       {
+        "id": "bracket",
+        "state": "unsaved",
+        "ticked": true
+       },
+       {
+        "id": "lid",
+        "state": "saved"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "row-save-changed-while-saving",
+   "rules": [
+    "6.5",
+    "4.1"
+   ],
+   "title": "A row's Save whose document changes during the save does not close it",
+   "docs": [
+    {
+     "id": "bracket",
+     "name": "Bracket",
+     "path": "~/Designs/Bracket.sc",
+     "dirty": true
+    },
+    {
+     "id": "lid",
+     "name": "Lid",
+     "path": "~/Designs/Lid.sc",
+     "dirty": true
+    }
+   ],
+   "steps": [
+    {
+     "do": "rowSave",
+     "id": "bracket"
+    },
+    {
+     "do": "docChanged",
+     "id": "bracket"
+    },
+    {
+     "do": "saveDone"
+    },
+    {
+     "expect": {
+      "prompt": "list",
+      "closed": [],
+      "count": 2,
+      "rows": [
+       {
+        "id": "bracket",
+        "state": "unsaved"
+       },
+       {
+        "id": "lid"
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "single-has-no-tick",
+   "rules": [
+    "1.2"
+   ],
+   "title": "The single prompt has no tick box: its document can't be unticked",
+   "docs": [
+    {
+     "id": "bracket",
+     "name": "Bracket",
+     "path": "~/Designs/Bracket.sc",
+     "dirty": true
+    },
+    {
+     "id": "gearbox",
+     "name": "Gearbox",
+     "path": "~/Designs/Gearbox.sc",
+     "dirty": false
+    }
+   ],
+   "steps": [
+    {
+     "do": "tick",
+     "id": "bracket",
+     "on": false,
+     "ignored": true
+    },
+    {
+     "do": "saveSelected"
+    },
+    {
+     "expect": {
+      "request": {
+       "type": "save",
+       "id": "bracket"
+      }
      }
     }
    ]

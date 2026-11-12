@@ -87,8 +87,8 @@ Nobody certifies this. The app's makers assert it, and the checklist and the sce
 anyone can check. Put this in the pull request and offer it for the app's documentation:
 
 ```
-Conforms to No File Left Behind 0.3 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
-- Scenarios: 32 of 32 pass (<path to the test>)
+Conforms to No File Left Behind 0.4.0 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
+- Scenarios: 37 of 37 pass (<path to the test>)
 - Checklist: all lines met / all except: <line and why>
 - Verified by running: <which lines>. By reading the code only: <which lines>.
 - Paths covered: <quit, close window, Close All, update, system quit>

@@ -7,6 +7,7 @@ These exist to save you the work, and to show one way of doing it.
 | Toolkit | Folder | What it is |
 |---|---|---|
 | Web | [`web/`](web/) | `<unsaved-list>`, a custom element in one file with no dependencies. The [demo](https://no-file-left-behind.github.io/demo/) runs on it. |
+| egui (Rust) | [`egui/`](egui/) | A crate with the rules in a model that needs no egui, and an immediate-mode window for egui 0.37. |
 | Qt 6 Widgets (C++) | [`qt/`](qt/) | `nflb::UnsavedListDialog`, a `QDialog`, with the rules in a QtCore-only model. |
 
 Each one keeps the rules in a model with no window in it, passes the [scenarios](../scenarios/),

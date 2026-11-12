@@ -128,6 +128,7 @@ private:
         QList<QString> queue;
         RunMode mode = RunMode::Selected;
         bool failed = false;
+        bool changed = false; // the document being saved changed during its save (6.5)
         QString target; // the row being saved, for RunMode::Row
     };
 

@@ -30,7 +30,7 @@ the [checklist](CHECKLIST.md).
 2. Keep the rules in a small model with no window in it. There is a
    [reference model](https://github.com/no-file-left-behind/no-file-left-behind.github.io/blob/main/scenarios/reference/model.mjs)
    of about 150 lines to port, or write your own.
-3. Run the [scenarios](scenarios/) against your model: 32 cases, each a list of inputs and what
+3. Run the [scenarios](scenarios/) against your model: 37 cases, each a list of inputs and what
    the window must show after them.
 4. Build the window the way your toolkit does dialogs, and go through the
    [checklist](CHECKLIST.md).
@@ -41,8 +41,8 @@ Nobody certifies this. You assert it, and the checklist and the scenarios are ho
 check. Put a statement like this in your documentation or release notes:
 
 ```
-Conforms to No File Left Behind 0.3 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
-- Scenarios: 32 of 32 pass
+Conforms to No File Left Behind 0.4.0 (https://github.com/no-file-left-behind/no-file-left-behind.github.io)
+- Scenarios: 37 of 37 pass
 - Checklist: all lines met
 ```
 

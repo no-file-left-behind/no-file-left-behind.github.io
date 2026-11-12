@@ -2,7 +2,7 @@
 
 A custom element that asks about unsaved documents when a web app closes several at once: one
 list, a row each, every row ticked, and nothing closes if a save fails. It conforms to
-[No File Left Behind 0.3](../../SPEC.md) for the rules it owns (see [What it does not do](#what-it-does-not-do)).
+[No File Left Behind 0.4.0](../../SPEC.md) for the rules it owns (see [What it does not do](#what-it-does-not-do)).
 
 It is one file, [`unsaved-list.js`](unsaved-list.js): an ES module with no dependencies and no build
 step. Copy it into your app. [`example.html`](example.html) is a small pretend app that uses it; serve
@@ -128,7 +128,7 @@ unsaved-list::part(title) { font-size: 1.25rem; }
 ## Tests
 
 ```
-node implementations/web/test/scenarios.mjs   # the 32 scenarios, against the Closing in unsaved-list.js
+node implementations/web/test/scenarios.mjs   # the scenarios, against the Closing in unsaved-list.js
 node implementations/web/test/browser.mjs     # the window, in headless Chromium
 ```
 

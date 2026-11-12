@@ -2,7 +2,7 @@
 
 The list of unsaved work for a Qt 6 Widgets application (C++17, Qt 6.4 or later). When your app
 quits or closes several documents at once, it asks about the unsaved ones once, in one list, and
-never closes anything if a save fails. It conforms to No File Left Behind 0.3: all 32
+never closes anything if a save fails. It conforms to No File Left Behind 0.4.0: all 37
 [scenarios](../../scenarios/) pass against its model, and the window is tested offscreen.
 
 It has two parts:

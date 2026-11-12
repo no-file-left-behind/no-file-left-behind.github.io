@@ -70,6 +70,7 @@ export class Closing {
   tick(id, on) {
     const d = this.#doc(id);
     if (!this.#idle() || !d || !d.open || d.state !== "unsaved") return false;
+    if (this.snapshot().prompt === "single") return false; // the single prompt has no tick box
     d.ticked = !!on; return true;                       // 4.4: only this row changes
   }
 
@@ -118,21 +119,23 @@ export class Closing {
   pickCancelled() {
     if (!this.request || this.request.type !== "pick") return false;
     this.#doc(this.request.id).note = { kind: "cancelled", text: null };
-    this.run.failed = true; this.run.queue = [];        // 3.1.3: a cancelled picker stops the run
+    this.run.failed = true;                             // 3.1.3: a cancelled picker stops the run
     this.request = null; this.#finishRun(); return true;
   }
 
   saveDone() {
     if (!this.request || this.request.type !== "save") return false;
     const d = this.#doc(this.request.id);
-    d.path = this.request.path; d.readOnly = false; d.state = "saved"; d.savedTo = d.path; d.note = null;
+    d.path = this.request.path; d.readOnly = false; d.savedTo = d.path; d.note = null;
+    d.state = this.run.changed ? "unsaved" : "saved";   // 6.5: changed while it was being saved, so not all of it is saved
+    this.run.changed = false;
     this.run.queue.shift(); this.request = null; this.#next(); return true;
   }
 
   saveFailed(reason) {
     if (!this.request || this.request.type !== "save") return false;
     this.#doc(this.request.id).note = { kind: "failed", text: reason }; // 3.4: the row says why
-    this.run.failed = true;
+    this.run.failed = true; this.run.changed = false;
     this.run.queue.shift(); this.request = null; this.#next(); return true; // 3.1.3: the others still save
   }
 
@@ -140,7 +143,7 @@ export class Closing {
   docChanged(id) {
     const d = this.#doc(id);
     if (this.outcome || !d || !d.open) return false;
-    if (this.request && this.request.id === id) return true; // being saved now: the save takes its latest state
+    if (this.request && this.request.type === "save" && this.request.id === id) { this.run.changed = true; return true; } // told on saveDone
     if (d.state === "clean") d.ticked = true;                // a new row joins the list, ticked (2.4)
     d.state = "unsaved"; d.savedTo = null; return true;
   }
@@ -148,7 +151,7 @@ export class Closing {
   // ---- how a run of saves goes -----------------------------------------------------------------
   #start(queue, mode) {
     for (const id of queue) this.#doc(id).note = null;
-    this.run = { queue: queue.slice(), mode, failed: false, target: mode === "row" ? queue[0] : null };
+    this.run = { queue: queue.slice(), mode, failed: false, changed: false, target: mode === "row" ? queue[0] : null };
     this.#next(); return true;
   }
 
@@ -170,7 +173,10 @@ export class Closing {
       if (d.state === "saved") d.open = false;
       return this.#lastRowGone();
     }
-    if (!failed) this.#proceed();   // 3.1.2. Otherwise 3.1.1: nothing closes and the window stays.
+    // 3.1.2: everything ticked has saved, so the action goes ahead. Otherwise 3.1.1: nothing closes and the
+    // window stays. A document that changed during the run is unsaved again and ticked, so it holds the
+    // window open too: it must not close unasked (6.5).
+    if (!failed && !this.#unsaved().some((d) => d.ticked)) this.#proceed();
   }
 
   // 4.3: when no unsaved row is left, the action carries on.

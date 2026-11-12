@@ -1,6 +1,6 @@
 # No File Left Behind — specification
 
-Version 0.3 (draft). The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
+Version 0.4.0-rc1 (release candidate: it becomes 0.4.0 unless a problem is found). The key words MUST, MUST NOT, SHOULD, SHOULD NOT and MAY are to be read
 as described in [RFC 2119](https://www.rfc-editor.org/rfc/rfc2119). [What changed](#changes)
 since earlier versions is at the end.
 
@@ -80,6 +80,9 @@ of those documents have unsaved changes, it asks about them **once, in one list*
 - **4.3** When the last row has left the list, the application MUST carry on with the action,
   exactly as if the user had answered for all of them at once.
 - **4.4** Answering one row MUST NOT change any other row's tick or state.
+- **4.5** A list SHOULD stay a list. When rows have left and one remains, the window keeps its
+  shape (its title then reads "Save changes to 1 document?") and does not turn into the
+  single-document prompt part-way through.
 
 ## 5. Keyboard, focus and screen readers
 
@@ -102,7 +105,9 @@ of those documents have unsaved changes, it asks about them **once, in one list*
   The row MUST say why ("The original file is read-only"), and SHOULD say so before the user
   presses anything.
 - **6.2 A save that takes time** (a large file, a network drive). The row MUST show that it is
-  saving, and every button except Cancel MUST wait. Cancel MUST stay available. Pressed during
+  saving, and every control that answers (the tick boxes, the rows' Save and Discard, Save
+  Selected and Don't Save) MUST wait. Cancel MUST stay available. (While a save picker is in
+  front of the list, the picker's own Cancel is the way out, and the list's Cancel MAY wait.) Pressed during
   a save, it stops the saves not yet started and abandons the one in progress; documents
   already saved stay saved, and nothing closes (3.3). An abandoned or failed save MUST NOT
   leave a half-written file in place of the original: the application SHOULD write to a
@@ -117,7 +122,10 @@ of those documents have unsaved changes, it asks about them **once, in one list*
 - **6.5 A document changes while the list is open** (an autosave, a background edit). Its row
   MUST stay, and saving MUST save its latest state. A row that had already saved needs saving
   again. A document in the set that had no unsaved changes and gains some MUST get a row,
-  ticked: it must not close unasked.
+  ticked: it must not close unasked. This holds during Save Selected too: a document that
+  changes while the others are being saved MUST keep the list open when the saves finish, and
+  a change that arrives while that document itself is being saved, and may not be in the save,
+  MUST leave its row unsaved.
 
 ## 7. Choosing the old behaviour
 
@@ -137,9 +145,20 @@ of those documents have unsaved changes, it asks about them **once, in one list*
 An application conforms to No File Left Behind when it meets every MUST in sections 1 to 6.
 The [checklist](CHECKLIST.md) lists them for a review, and the [scenarios](scenarios/) test the
 rules that don't depend on a window: run them against your implementation. Say which version
-you checked against: "conforms to No File Left Behind 0.3".
+you checked against: "conforms to No File Left Behind 0.4.0".
 
 ## Changes
+
+**0.4.0**
+
+- 6.5: a document that changes during Save Selected keeps the list open instead of closing
+  unasked, and a change during a document's own save leaves it unsaved. Found by the Rust
+  implementation's tests; the [scenarios](scenarios/) now cover it (37 cases).
+- 6.2: which controls wait during a save, and what Cancel means while a save picker is open.
+- New 4.5: a list down to one row stays a list.
+- Ready-made [implementations](implementations/) for the web, Qt and egui, and a
+  [guide to implementing it](IMPLEMENT.md), with or without an AI coding assistant.
+- Everything is now free for any use with no credit needed: CC0 for the text, 0BSD for the code.
 
 **0.3**
 

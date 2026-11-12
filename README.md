@@ -49,6 +49,8 @@ thing to copy and users the same safe answer everywhere.
 - **App makers:** [implement it](IMPLEMENT.md), by hand or by handing your AI coding assistant
   one link. It is a set of rules, not a library: build it your way, test it against the
   [scenarios](scenarios/), check it against the [checklist](CHECKLIST.md), and say you conform.
+- **In a hurry?** There are ready-made [implementations](implementations/) for the web, Qt and
+  egui. Using them is optional: an app conforms by meeting the rules, however it is built.
 - **Toolkit and design-system makers:** a shared "save several" dialog in a toolkit brings the
   pattern to every app built on it.
 - **Users:** if an app you use asks you one file at a time, point its makers here.

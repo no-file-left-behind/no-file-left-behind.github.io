@@ -28,7 +28,7 @@ folder and the procedure loads by itself when it is relevant.
 
 - `SPEC.md` is the source of truth. A change to a rule bumps its version, adds a line under
   "Changes", and updates `CHECKLIST.md`, `scenarios/` and the skill to match.
-- After touching `scenarios/`: `node scenarios/reference/run.mjs` must print "32 of 32" (or the
+- After touching `scenarios/`: `node scenarios/reference/run.mjs` must print "37 of 37" (or the
   new total). A new rule gets at least one scenario.
 - `demo/index.html` is a single page with no build step. Check a change to it in a real browser,
   in light and dark, at desktop and phone widths.

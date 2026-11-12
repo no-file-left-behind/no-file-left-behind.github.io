@@ -22,7 +22,7 @@ body:
     id: spec
     attributes:
       label: Which version of the specification?
-      placeholder: "0.3"
+      placeholder: "0.4.0"
   - type: textarea
     id: notes
     attributes:

@@ -127,6 +127,8 @@ bool ClosingModel::tick(const QString &id, bool on)
     Doc *d = doc(id);
     if (!idle() || !d || !d->open || d->state != State::Unsaved)
         return false;
+    if (snapshot().prompt == Prompt::Single)
+        return false; // the single prompt has no tick box
     d->ticked = on; // 4.4: only this row changes
     return true;
 }
@@ -218,7 +220,9 @@ bool ClosingModel::saveDone()
     Doc *d = doc(m_request.id);
     d->path = m_request.path;
     d->readOnly = false;
-    d->state = State::Saved;
+    // 6.5: changed while it was being saved, so not all of it is saved
+    d->state = m_run.changed ? State::Unsaved : State::Saved;
+    m_run.changed = false;
     d->savedTo = d->path;
     d->note = Note();
     m_run.queue.removeFirst();
@@ -233,6 +237,7 @@ bool ClosingModel::saveFailed(const QString &reason)
         return false;
     doc(m_request.id)->note = Note{NoteKind::Failed, reason}; // 3.4: the row says why
     m_run.failed = true;
+    m_run.changed = false;
     m_run.queue.removeFirst();
     m_request = Request();
     next(); // 3.1.3: the others still save
@@ -244,8 +249,10 @@ bool ClosingModel::docChanged(const QString &id)
     Doc *d = doc(id);
     if (isFinished() || !d || !d->open)
         return false;
-    if (m_request.type != RequestType::None && m_request.id == id)
-        return true; // being saved now: the save takes its latest state
+    if (m_request.type == RequestType::Save && m_request.id == id) {
+        m_run.changed = true; // told on saveDone
+        return true;
+    }
     if (d->state == State::Clean)
         d->ticked = true; // a new row joins the list, ticked (2.4)
     d->state = State::Unsaved;
@@ -302,8 +309,14 @@ void ClosingModel::finishRun()
         lastRowGone();
         return;
     }
-    if (!run.failed)
-        proceed(); // 3.1.2. Otherwise 3.1.1: nothing closes and the window stays.
+    // 3.1.2: everything ticked has saved, so the action goes ahead. Otherwise 3.1.1: nothing closes
+    // and the window stays. A document that changed during the run is unsaved again and ticked, so
+    // it holds the window open too: it must not close unasked (6.5).
+    bool tickedLeft = false;
+    for (const Doc &d : m_docs)
+        tickedLeft = tickedLeft || (d.open && d.state == State::Unsaved && d.ticked);
+    if (!run.failed && !tickedLeft)
+        proceed();
 }
 
 // 4.3: when no unsaved row is left, the action carries on.

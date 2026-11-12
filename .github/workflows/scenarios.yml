@@ -20,3 +20,16 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y qt6-base-dev cmake ninja-build g++
       - run: cmake -S implementations/qt -B build -G Ninja -DCMAKE_CXX_FLAGS="-Wall -Wextra" && cmake --build build
       - run: QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure
+  egui:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+      - run: cargo fmt --check
+        working-directory: implementations/egui
+      - run: cargo clippy --all-targets -- -D warnings
+        working-directory: implementations/egui
+      - run: cargo test
+        working-directory: implementations/egui
