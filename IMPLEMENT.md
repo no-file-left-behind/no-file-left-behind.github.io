@@ -58,9 +58,9 @@ repository, and add or change it **in the same pull request as the work**:
 ```
 
 Merging that pull request is then the declaration: the code and the statement land together.
-With [one small workflow](https://github.com/no-file-left-behind/adopters#2-declare-it-in-your-own-repository) the pull request says so
-itself ("Merging this pull request declares that My App conforms to No File Left Behind 0.4.0"),
-and the [list of apps](https://github.com/no-file-left-behind/adopters#readme) follows the file from then on, with nothing more for you to do.
+The [list of apps](https://github.com/no-file-left-behind/adopters#readme) follows the file from then on, with nothing more for you to do.
+An optional [small workflow](https://github.com/no-file-left-behind/adopters#2-declare-it-in-your-own-repository)
+checks the file whenever it changes; propose it in a pull request of its own.
 
 ## Tell us, if you like
 
